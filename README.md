@@ -1,33 +1,11 @@
 AI Health Prediction System
 
-Status: Development — models removed, training notebooks included.
-Purpose: Educational demo that shows a diabetes predictor (classical ML) and a brain tumour detector (CNN). Use the notebooks to train/export models, then place exported models in backend/models/ for the API.
-
-Project structure
-ai-health-prediction/
-├─ backend/
-│  ├─ models/                        # place exported models here
-│  │  ├─ diabetes_model.pkl          # <-- put here after training
-│  │  └─ cnn_brain_tumour/           # <-- SavedModel folder or .h5 file
-│  ├─ app.py
-│  ├─ utils.py
-│  └─ requirements.txt
-├─ frontend/
-│  ├─ public/
-│  └─ src/
-├─ notebooks/                         # TRAINING NOTEBOOKS (you added these)
-│  ├─ diabetes_training.ipynb
-│  └─ brain_tumour_training.ipynb
-├─ README.md
-└─ requirements.lock.txt              # optional: exact installed packages
 
 Quick links / datasets
 
-Diabetes dataset: [DATASET_LINK_1]
+Diabetes dataset: [https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset]
 
-Brain MRI dataset: [DATASET_LINK_2]
-
-Replace the two placeholders above with the public URLs for the datasets you used.
+Brain MRI dataset: [https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset]
 
 Overview
 
@@ -42,14 +20,6 @@ POST /predict-diabetes — accepts JSON and returns {"prediction": "...", "confi
 POST /predict-tumour — accepts multipart image and returns {"prediction": "...", "confidence": ...}
 
 Training: Notebooks are provided in notebooks/. Run these to reproduce training and export models.
-
-Important notes (models removed)
-
-Models have been removed from the repo. Use the notebooks to retrain or reproduce the models locally. After training, export and copy the model artifacts into backend/models/:
-
-Diabetes model: backend/models/diabetes_model.pkl (pickle or joblib)
-
-Brain tumour model: backend/models/cnn_brain_tumour/ (SavedModel folder) or backend/models/cnn_brain_tumour.h5
 
 The API expects these exact paths — adjust app.py if you use different filenames.
 
@@ -142,53 +112,12 @@ Health check:
 curl http://localhost:5000/health
 # expect JSON {"status":"ok", "diabetes_model_loaded": true, "cnn_model_loaded": true}
 
-Example API calls
-
-Diabetes
-
-curl -X POST http://localhost:5000/predict-diabetes \
-  -H "Content-Type: application/json" \
-  -d '{
-    "gender":"male","age":47,"hypertension":false,
-    "heart_disease":false,"smoking_history":"former",
-    "bmi":27.3,"hba1c":6.1,"glucose":130
-  }'
-
 
 Tumour
 
 curl -X POST http://localhost:5000/predict-tumour \
   -F "image=@/full/path/to/mri.jpg"
 
-Deployment tips
-
-Add MAX_CONTENT_LENGTH in app.py to limit upload size.
-
-Use gunicorn + nginx (or containerize with Docker).
-
-For production, enable HTTPS and tighten CORS origins.
-
-Consider using background job queue (Celery / RQ) for large workloads.
-
-Troubleshooting
-
-Flask import errors / pip conflicts: Use Python 3.11 and a fresh venv. If you installed latest packages without version pins and it worked, run pip freeze > requirements.lock.txt.
-
-TensorFlow wheel issues: Ensure Python version is compatible (3.8–3.11). For GPU, ensure CUDA/cuDNN compatibility.
-
-Model shape mismatches: Confirm input preprocessing in app.py matches training (resize, normalization, feature order and scaling).
-
-Pickle security: Only load pickles from trusted sources.
-
-Optional enhancements (ideas)
-
-Add an explanation layer (Grad-CAM) for the CNN predictions.
-
-Add confidence calibration for the classifiers.
-
-Add a small admin page to upload trained models directly into backend/models/.
-
-CI test that runs the notebooks or minimal validations (e.g., load-sanity-check models).
 
 Disclaimer
 
