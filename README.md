@@ -1,13 +1,13 @@
-AI Health Prediction System
+###AI Health Prediction System
 
 
-Quick links / datasets
+##Quick links / datasets
 
 Diabetes dataset: [https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset]
 
 Brain MRI dataset: [https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset]
 
-Overview
+##Overview
 
 Frontend: React app (Vite/CRA compatible). UI pages for Home, Diabetes Prediction (form), Brain Tumour Detection (image upload).
 
@@ -47,11 +47,6 @@ source venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-# (optional) freeze the exact working environment
-python -m pip freeze > ../requirements.lock.txt
-
-
-If you installed dependencies without version pins earlier and it worked, keep requirements.lock.txt for reproducibility.
 
 Setup — Frontend
 cd frontend
